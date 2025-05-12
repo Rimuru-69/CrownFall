@@ -3,50 +3,60 @@ const game = new Chess();
 const board = Chessboard('board', {
   draggable: true,
   position: 'start',
-  onDrop: handleMove
+  onDrop: onDrop
 });
 
-function handleMove(source, target) {
+function onDrop(source, target) {
   const move = game.move({
     from: source,
     to: target,
-    promotion: 'q' // always promote to queen
+    promotion: 'q'
   });
 
   if (move === null) return 'snapback';
 
-  updateGameStatus();
+  updateStatus();
 
-  // Check for game end
   if (game.game_over()) {
-    saveGameData();
+    localStorage.setItem('gamesPlayed', (parseInt(localStorage.getItem('gamesPlayed') || '0') + 1).toString());
+    alert("Game Over!\n" + getResultText());
   }
 }
 
-function updateGameStatus() {
-  let status = '';
+function getResultText() {
+  if (game.in_checkmate()) {
+    return `Checkmate! ${game.turn() === 'w' ? 'Black' : 'White'} wins.`;
+  }
+  if (game.in_draw()) return "Draw!";
+  return "Game Over!";
+}
+
+function updateStatus() {
+  const status = document.getElementById('status');
+  const fen = document.getElementById('fen');
+  const pgn = document.getElementById('pgn');
+
+  let statusText = '';
+  const moveColor = game.turn() === 'w' ? 'White' : 'Black';
 
   if (game.in_checkmate()) {
-    status = 'Checkmate! ' + (game.turn() === 'w' ? 'Black' : 'White') + ' wins.';
+    statusText = `Checkmate! ${moveColor} is in checkmate.`;
   } else if (game.in_draw()) {
-    status = 'Draw!';
+    statusText = 'Draw!';
   } else {
-    status = (game.turn() === 'w' ? 'White' : 'Black') + ' to move';
-    if (game.in_check()) {
-      status += ' (in check)';
-    }
+    statusText = `${moveColor} to move`;
+    if (game.in_check()) statusText += ' (in check)';
   }
 
-  document.getElementById('status').textContent = status;
-  document.getElementById('fen').textContent = 'FEN: ' + game.fen();
-  document.getElementById('pgn').textContent = 'PGN: ' + game.pgn();
+  status.innerText = statusText;
+  fen.innerText = 'FEN: ' + game.fen();
+  pgn.innerText = 'PGN: ' + game.pgn();
 }
 
-function saveGameData() {
-  let games = parseInt(localStorage.getItem('gamesPlayed') || '0');
-  games++;
-  localStorage.setItem('gamesPlayed', games);
-  alert(`Game Over! Total games played: ${games}`);
+function resetGame() {
+  game.reset();
+  board.position('start');
+  updateStatus();
 }
 
-updateGameStatus();
+updateStatus();

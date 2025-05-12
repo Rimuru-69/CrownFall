@@ -8,14 +8,22 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css" />
 </head>
 <body>
-  <h1>CrownFall</h1>
-  <div id="board" class="chess-board"></div>
-  <p id="status"></p>
-  <p id="fen"></p>
-  <p id="pgn"></p>
+  <div class="container">
+    <h1>CrownFall ♛</h1>
+    <div id="board"></div>
+    <div id="info">
+      <p id="status"></p>
+      <p id="fen"></p>
+      <p id="pgn"></p>
+      <button onclick="resetGame()">♻️ Reset Game</button>
+    </div>
+  </div>
 
+  <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+
+  <!-- Your script -->
   <script src="script.js"></script>
 </body>
 </html>
