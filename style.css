@@ -1,7 +1,7 @@
 body {
-  background-color: #1c1c1c;
+  background-color: #f4f4f4;
   font-family: 'Segoe UI', sans-serif;
-  color: #fff;
+  color: #222;
   text-align: center;
   margin: 0;
   padding: 0;
@@ -14,14 +14,12 @@ body {
 h1 {
   font-size: 3rem;
   margin-bottom: 20px;
-  color: #ffcc00;
-  text-shadow: 2px 2px #000;
+  color: #222;
 }
 
 #board {
   width: 400px;
   margin: 0 auto;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 #info {
@@ -30,19 +28,20 @@ h1 {
 
 #status, #fen, #pgn {
   margin: 10px 0;
+  font-size: 1rem;
 }
 
 button {
   padding: 10px 20px;
-  background-color: #ffcc00;
+  background-color: #28a745;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
-  color: #000;
+  color: #fff;
   transition: background 0.3s;
 }
 
 button:hover {
-  background-color: #ffe066;
+  background-color: #218838;
 }

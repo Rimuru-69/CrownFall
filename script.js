@@ -18,8 +18,9 @@ function onDrop(source, target) {
   updateStatus();
 
   if (game.game_over()) {
-    localStorage.setItem('gamesPlayed', (parseInt(localStorage.getItem('gamesPlayed') || '0') + 1).toString());
-    alert("Game Over!\n" + getResultText());
+    setTimeout(() => {
+      alert("Game Over!\n" + getResultText());
+    }, 100);
   }
 }
 
