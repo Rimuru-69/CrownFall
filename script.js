@@ -3,31 +3,37 @@ const game = new Chess();
 const board = Chessboard('board', {
   draggable: true,
   position: 'start',
-  onDrop: onDrop
+  onDrop: handleMove
 });
 
-function onDrop(source, target) {
+function handleMove(source, target) {
   const move = game.move({
     from: source,
     to: target,
-    promotion: 'q'
+    promotion: 'q' // always promote to queen
   });
 
   if (move === null) return 'snapback';
-  updateStatus();
+
+  updateGameStatus();
+
+  // Check for game end
+  if (game.game_over()) {
+    saveGameData();
+  }
 }
 
-function updateStatus() {
+function updateGameStatus() {
   let status = '';
 
   if (game.in_checkmate()) {
-    status = 'Game over, ' + (game.turn() === 'w' ? 'Black' : 'White') + ' wins by checkmate.';
+    status = 'Checkmate! ' + (game.turn() === 'w' ? 'Black' : 'White') + ' wins.';
   } else if (game.in_draw()) {
-    status = 'Game over, drawn position.';
+    status = 'Draw!';
   } else {
     status = (game.turn() === 'w' ? 'White' : 'Black') + ' to move';
     if (game.in_check()) {
-      status += ', in check';
+      status += ' (in check)';
     }
   }
 
@@ -36,4 +42,11 @@ function updateStatus() {
   document.getElementById('pgn').textContent = 'PGN: ' + game.pgn();
 }
 
-updateStatus();
+function saveGameData() {
+  let games = parseInt(localStorage.getItem('gamesPlayed') || '0');
+  games++;
+  localStorage.setItem('gamesPlayed', games);
+  alert(`Game Over! Total games played: ${games}`);
+}
+
+updateGameStatus();
