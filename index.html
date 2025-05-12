@@ -1,18 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>CrownFall – Pure JS Chess</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrownFall Chess</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>CrownFall ♛</h1>
-  <div id="game">
-    <div id="chessboard"></div>
-  </div>
-  <p id="turn">Turn: White</p>
-  <p id="status"></p>
-
-  <script src="script.js"></script>
+    <h1>CrownFall Chess</h1>
+    
+    <div class="game-container">
+        <div class="status-bar">
+            <div class="player-info">
+                <span class="player-name" id="player1">Player 1</span>
+                <span class="player-color">(White)</span>
+            </div>
+            <div class="turn-indicator" id="turn-indicator">White's Turn</div>
+            <div class="player-info">
+                <span class="player-color">(Black)</span>
+                <span class="player-name" id="player2">Player 2</span>
+            </div>
+        </div>
+        
+        <div class="chessboard" id="chessboard"></div>
+        
+        <div class="controls">
+            <button id="undo-btn">Undo Last Move</button>
+            <button id="reset-btn">Reset Game</button>
+        </div>
+        
+        <div class="game-status" id="game-status"></div>
+        
+        <div class="captured-pieces">
+            <div class="captured-white" id="captured-white"></div>
+            <div class="captured-black" id="captured-black"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
 </body>
 </html>
