@@ -1,26 +1,25 @@
+const game = new Chess();
+
 const board = Chessboard('board', {
   draggable: true,
   position: 'start',
-  onDrop: onDrop,
+  onDrop: onDrop
 });
-
-const game = new Chess();
 
 function onDrop(source, target) {
   const move = game.move({
     from: source,
     to: target,
-    promotion: 'q' // auto-promote to queen
+    promotion: 'q'
   });
 
   if (move === null) return 'snapback';
-
   updateStatus();
 }
 
 function updateStatus() {
   let status = '';
-  
+
   if (game.in_checkmate()) {
     status = 'Game over, ' + (game.turn() === 'w' ? 'Black' : 'White') + ' wins by checkmate.';
   } else if (game.in_draw()) {
@@ -38,15 +37,3 @@ function updateStatus() {
 }
 
 updateStatus();
-
-let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
-
-function saveGameData() {
-  gamesPlayed++;
-  localStorage.setItem('gamesPlayed', gamesPlayed);
-  alert(`Games Played: ${gamesPlayed}`);
-}
-
-if (game.in_checkmate() || game.in_draw()) {
-  saveGameData();
-}
